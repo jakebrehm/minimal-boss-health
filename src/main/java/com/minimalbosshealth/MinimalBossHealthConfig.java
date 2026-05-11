@@ -26,7 +26,7 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "fadeEnabled",
-		name = "Fade In/Out",
+		name = "Fade in/out",
 		description = "Fade the health bar in when a boss appears and out when it dies",
 		position = 0
 	)
@@ -35,21 +35,29 @@ public interface MinimalBossHealthConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "hitpointsDisplayStyle",
+			name = "Display style",
+			description = "Show hitpoint's as value (if possible), percentage, or both",
+			position = 1
+	)
+	default HitpointsDisplayStyle hitpointsDisplayStyle() { return HitpointsDisplayStyle.HITPOINTS; }
+
 	@Alpha
 	@ConfigItem(
 		keyName = "remainingHpColor",
-		name = "Remaining HP Color",
+		name = "Remaining HP color",
 		description = "The color of the boss's remaining health.",
-		position = 1
+		position = 2
 	)
 	default Color remainingHpColor() { return Color.GREEN; }
 
 	@Alpha
 	@ConfigItem(
 		keyName = "missingHpColor",
-		name = "Missing HP Color",
+		name = "Missing HP color",
 		description = "The color of the boss's missing health.",
-		position = 2
+		position = 3
 	)
 	default Color missingHpColor() { return Color.RED; }
 
@@ -59,7 +67,7 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "barHeight",
-		name = "Health Bar Height",
+		name = "Health bar height",
 		description = "The height of the boss's health bar.",
 		section = barSettingsSection,
 		position = 0
@@ -68,16 +76,16 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "displayBarText",
-		name = "Display Text",
+		name = "Display text",
 		description = "Show the opponent's health percentage value as text",
 		section = barSettingsSection,
 		position = 1
 	)
-	default displayBarTextOptions displayBarText() { return displayBarTextOptions.HOVER; }
+	default DisplayBarTextOptions displayBarText() { return DisplayBarTextOptions.HOVER; }
 
 	@ConfigItem(
 		keyName = "barTextFontSize",
-		name = "Font Size",
+		name = "Font size",
 		description = "Font size of the displayed text",
 		section = barSettingsSection,
 		position = 2
@@ -86,7 +94,7 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "barTextXOffset",
-		name = "Text X Offset",
+		name = "Text X offset",
 		description = "X Offset of the displayed text",
 		section = barSettingsSection,
 		position = 3
@@ -95,7 +103,7 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "barTextYOffset",
-		name = "Text Y Offset",
+		name = "Text Y offset",
 		description = "Y Offset of the displayed text",
 		section = barSettingsSection,
 		position = 4
@@ -104,7 +112,7 @@ public interface MinimalBossHealthConfig extends Config
 
 	@ConfigItem(
 		keyName = "barHoverTolerance",
-		name = "Hover Tolerance",
+		name = "Hover tolerance",
 		description = "The amount of tolerance when determining if bar is being hovered",
 		section = barSettingsSection,
 		position = 5
@@ -117,7 +125,22 @@ public interface MinimalBossHealthConfig extends Config
 
 	@Getter
 	@RequiredArgsConstructor
-	enum displayBarTextOptions {
+	enum HitpointsDisplayStyle {
+		HITPOINTS("Hitpoints"),
+		PERCENTAGE("Percentage"),
+		BOTH("Both")
+		;
+
+		@Getter
+		private final String name;
+
+		@Override
+		public String toString() { return name; }
+	}
+
+	@Getter
+	@RequiredArgsConstructor
+	enum DisplayBarTextOptions {
 		OFF("Off"),
 		HOVER("Hover"),
 		ALWAYS("Always"),
